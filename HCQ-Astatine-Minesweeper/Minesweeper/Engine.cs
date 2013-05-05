@@ -19,8 +19,7 @@
         // oxo glei glei
         // i go to si imam :)
         start:
-            Field.Zapochni(out minichki, out row, out col,
-                out isBoomed, out minesCounter, out randomMines, out revealedCellsCounter);
+            Field.Zapochni(out minichki, out row, out col, out isBoomed, out minesCounter, out randomMines, out revealedCellsCounter);
 
             Field.FillWithRandomMines(minichki, randomMines);
 
@@ -57,6 +56,7 @@
                             Console.WriteLine();
                             goto start;
                         }
+
                         bool winner = PichLiSi(minichki, minesCounter);
                         if (winner)
                         {
@@ -69,6 +69,7 @@
                             Console.WriteLine();
                             goto start;
                         }
+
                         revealedCellsCounter++;
                     }
                     else
@@ -76,7 +77,7 @@
                         Console.WriteLine("Enter valid Row/Col!\n");
                     }
                 }
-                else if (proverka(line))
+                else if (IsInputCorrect(line))
                 {
                     switch (line)
                     {
@@ -85,12 +86,14 @@
                                 scoreBoard.PrintScoreBoard();
                                 goto enterRowCol;
                             }
+
                         case "exit":
                             {
                                 Console.WriteLine("\nGood bye!\n");
                                 Environment.Exit(0);
                                 break;
                             }
+
                         case "restart":
                             {
                                 Console.WriteLine();
@@ -105,15 +108,18 @@
             }
         }
 
-        private static bool proverka(string line)
+        private static bool IsInputCorrect(string line)
         {
             if (line.Equals("top") || line.Equals("restart") || line.Equals("exit"))
             {
                 return true;
             }
             else
+            {
                 return false;
+            }
         }
+
         private static bool IsMoveEntered(string line)
         {
             bool validMove = false;
@@ -122,12 +128,14 @@
                 string[] inputParams = line.Split();
                 int row = int.Parse(inputParams[0]);
                 int col = int.Parse(inputParams[1]);
+
                 validMove = true;
             }
             catch
             {
                 validMove = false;
             }
+
             return validMove;
         }
 
@@ -139,18 +147,18 @@
             {
                 for (int j = 0; j < matrix.GetLength(1); j++)
                 {
-                    if ((matrix[i, j] != "") && (matrix[i, j] != "*"))
+                    if ((matrix[i, j] != string.Empty) && (matrix[i, j] != "*"))
                     {
                         counter++;
                     }
                 }
-
             }
 
             if (counter == matrix.Length - cntMines)
             {
                 isWinner = true;
             }
+
             return isWinner;
         }
     }
