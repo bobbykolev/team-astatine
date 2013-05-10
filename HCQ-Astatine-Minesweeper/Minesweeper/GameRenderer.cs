@@ -12,31 +12,31 @@
         }
 
         // TODO: Rename; push an object of type 
-        public static void Display(string[,] matricaNaMinite, bool boomed)
+        public static void Display(string[,] tableAsMatrix, bool boomed)
         {
             Console.WriteLine();
             Console.WriteLine("     0 1 2 3 4 5 6 7 8 9");
             Console.WriteLine("   ---------------------");
-            for (int i = 0; i < matricaNaMinite.GetLength(0); i++)
+            for (int i = 0; i < tableAsMatrix.GetLength(0); i++)
             {
                 Console.Write("{0} | ", i);
-                for (int j = 0; j < matricaNaMinite.GetLength(1); j++)
+                for (int j = 0; j < tableAsMatrix.GetLength(1); j++)
                 {
-                    if (!(boomed) && ((matricaNaMinite[i, j] == "") || (matricaNaMinite[i, j] == "*")))
+                    if (!(boomed) && ((tableAsMatrix[i, j] == "") || (tableAsMatrix[i, j] == "*")))
                     {
                         Console.Write(" ?");
                     }
-                    if (!(boomed) && (matricaNaMinite[i, j] != "") && (matricaNaMinite[i, j] != "*"))
+                    if (!(boomed) && (tableAsMatrix[i, j] != "") && (tableAsMatrix[i, j] != "*"))
                     {
-                        Console.Write(" {0}", matricaNaMinite[i, j]);
+                        Console.Write(" {0}", tableAsMatrix[i, j]);
                     }
-                    if ((boomed) && (matricaNaMinite[i, j] == ""))
+                    if ((boomed) && (tableAsMatrix[i, j] == ""))
                     {
                         Console.Write(" -");
                     }
-                    if ((boomed) && (matricaNaMinite[i, j] != ""))
+                    if ((boomed) && (tableAsMatrix[i, j] != ""))
                     {
-                        Console.Write(" {0}", matricaNaMinite[i, j]);
+                        Console.Write(" {0}", tableAsMatrix[i, j]);
                     }
 
                 }
