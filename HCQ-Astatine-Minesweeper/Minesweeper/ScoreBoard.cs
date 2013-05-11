@@ -4,34 +4,58 @@
     using System.Linq;
     using Wintellect.PowerCollections;
 
+    /// <summary>
+    /// Class for printing players' scores
+    /// </summary>
     class ScoreBoard
     {
+        /// <summary>
+        /// const for visualisation maximum player on scoreboard
+        /// </summary>
+        private const int MAX_SHOWNED_PLAYERS_ON_SCOREBOARD = 5;
+
+        /// <summary>
+        /// OrderedMultiDictionary for keeping player's nickname and score
+        /// </summary>
         private readonly OrderedMultiDictionary<int, string> scoreBoard;
 
+        /// <summary>
+        /// Constructor which make an instance of OrderedMultiDictionary
+        /// </summary>
         public ScoreBoard()
         {
             this.scoreBoard = new OrderedMultiDictionary<int, string>(true);
         }
 
+        /// <summary>
+        /// Method which add new player on scoreboard
+        /// </summary>
+        /// <param name="playerName">player's nickname as string</param>
+        /// <param name="playerScore">player's score as int</param>
         public void AddPlayer(string playerName, int playerScore)
         {
-            //TO DO: Implement exception
-            if (!scoreBoard.ContainsKey(playerScore))
+            if ((playerName == null) || (playerName == string.Empty))
             {
-                scoreBoard.Add(playerScore, playerName);
+                throw new ArgumentNullException("You cannot play without a nickname");
+            }
+
+            if (!this.scoreBoard.ContainsKey(playerScore))
+            {
+                this.scoreBoard.Add(playerScore, playerName);
             }
             else
             {
-                scoreBoard[playerScore].Add(playerName);
+                this.scoreBoard[playerScore].Add(playerName);
             }
         }
 
+        /// <summary>
+        /// This method render the scoreboard
+        /// </summary>
         public void PrintScoreBoard()
         {
-            bool firstName = false;
-            int currentCounter = 1;
-
             Console.WriteLine();
+
             if (this.scoreBoard.Values.Count == 0)
             {
                 Console.WriteLine("Scoreboard empty!");
@@ -39,27 +63,22 @@
             else
             {
                 Console.WriteLine("Scoreboard:");
-                foreach (int key in this.scoreBoard.Keys.OrderByDescending(obj => obj))
+
+                int currentPlayer = 1;
+                var orderedScoreDescending = this.scoreBoard.Keys.OrderByDescending(obj => obj);
+                foreach (int key in orderedScoreDescending)
                 {
                     foreach (string person in this.scoreBoard[key])
                     {
-                        if (currentCounter < 6)
+                        if (currentPlayer <= MAX_SHOWNED_PLAYERS_ON_SCOREBOARD)
                         {
-                            Console.WriteLine("{0}. {1} --> {2} cells", currentCounter, person, key);
-                            currentCounter++;
+                            Console.WriteLine("{0}. {1} --> {2} cells", currentPlayer, person, key);
+                            currentPlayer++;
                         }
-                        else
-                        {
-                            firstName = true;
-                            break;
-                        }
-                    }
-                    if (firstName)
-                    {
-                        break;
                     }
                 }
             }
+
             Console.WriteLine();
         }
     }
