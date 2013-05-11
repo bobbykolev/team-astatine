@@ -3,82 +3,135 @@
     using System;
     using System.Linq;
 
-    class Field
+    internal class Field
     {
-        private const int NUMBER_OF_MINES = 15;
-        private const int MINES_FIELD_ROWS = 5;
-        private const int MINES_FIELD_COLS = 10;
+        private const int MinesNumber = 15;
+        private const int MatrixRows = 5;
+        private const int MatrixCols = 10;
 
-        public static void FillWithRandomMines(string[,] mines, Random randomMines)
+        private string[,] matrix;
+
+        public Field()
         {
-            int minesCounter = 0;
-            while (minesCounter < NUMBER_OF_MINES)
+            this.matrix = new string[5, 10];
+        }
+
+        public int Rows
+        {
+            get
             {
-                int randomRow = randomMines.Next(0, 5);
-                int randomCol = randomMines.Next(0, 10);
-                if (mines[randomRow, randomCol] == "")
+                return MatrixRows;
+            }
+        }
+
+        public int Cols
+        {
+            get
+            {
+                return MatrixCols;
+            }
+        }
+
+        public string[,] Matrix
+        {
+            get
+            {
+                return this.matrix;
+            }
+        }
+
+        public void FillWithRandomMines()
+        {
+            Random random = new Random();
+            int minesCounter = 0;
+
+            while (minesCounter < MinesNumber)
+            {
+                int randomRow = random.Next(0, MatrixRows);
+                int randomCol = random.Next(0, MatrixCols);
+
+                if (this.matrix[randomRow, randomCol] == string.Empty)
                 {
-                    mines[randomRow, randomCol] += "*";
+                    this.matrix[randomRow, randomCol] = "*";
                     minesCounter++;
                 }
             }
         }
 
-        // TODO: Rename (ConstructBoard etc); out parameters
-        public static void Zapochni(out string[,] mines, out int row,
-        out int col, out bool isBoomed, out int minesCounter, out Random randomMines, out int revealedCellsCounter)
+        public bool CheckIfIsMine(int row, int col)
         {
-            randomMines = new Random();
-            row = 0;
-            col = 0;
-            minesCounter = 0;
-            revealedCellsCounter = 0;
-            isBoomed = false;
-            mines = new string[MINES_FIELD_ROWS, MINES_FIELD_COLS];
+            ValidateCoordinates(row, col);
 
-            for (int i = 0; i < mines.GetLength(0); i++)
+            bool cellHasMine = false;
+
+            if (this.matrix[row, col] == "*")
             {
-                for (int j = 0; j < mines.GetLength(1); j++)
+                cellHasMine = true;
+            }
+
+            return cellHasMine;
+        }
+
+        public void Update(int row, int col)
+        {
+            ValidateCoordinates(row, col);
+
+            int minesCounter = this.CalculateAdjacentMines(row, col);
+            this.matrix[row, col] = minesCounter.ToString();
+
+        }
+
+        public void Clear()
+        {
+            for (int i = 0; i < MatrixRows; i++)
+            {
+                for (int j = 0; j < MatrixCols; j++)
                 {
-                    mines[i, j] = "";
+                    this.matrix[i, j] = string.Empty;
                 }
             }
         }
 
-        // TODO: Rename (UpdateAfterTurn etc)
-        public static bool Boom(string[,] matrica, int minesRow, int minesCol)
+        private int CalculateAdjacentMines(int row, int col)
         {
-            bool isKilled = false;
-            int[] dRow = { 1, 1, 1, 0, -1, -1, -1, 0 };
-            int[] dCol = { 1, 0, -1, -1, -1, 0, 1, 1 };
+            int[] rowDirections = { 1, 1, 1, 0, -1, -1, -1, 0 };
+            int[] colDirections = { 1, 0, -1, -1, -1, 0, 1, 1 };
+            int directionsCount = 8;
+
+            int currentRow = 0;
+            int currentCol = 0;
+            bool coordsAreInRange = false;
             int minesCounter = 0;
-            if (matrica[minesRow, minesCol] == "*")
-            {
-                isKilled = true;
-            }
 
-            // This has to be reffactored
-            if ((matrica[minesRow, minesCol] != "") && (matrica[minesRow, minesCol] != "*"))
+            for (int i = 0; i < directionsCount; i++)
             {
-                Console.WriteLine("Illegal Move!");
-            }
+                currentRow = rowDirections[i] + row;
+                currentCol = colDirections[i] + col;
 
-            if (matrica[minesRow, minesCol] == "")
-            {
-                for (int direction = 0; direction < 8; direction++)
+                coordsAreInRange = (0 <= currentRow && currentRow < MatrixRows) && (0 <= currentCol && currentCol < MatrixCols);
+
+                if (coordsAreInRange && this.matrix[currentRow, currentCol] == "*")
                 {
-                    int newRow = dRow[direction] + minesRow;
-                    int newCol = dCol[direction] + minesCol;
-                    if ((newRow >= 0) && (newRow < matrica.GetLength(0)) &&
-                        (newCol >= 0) && (newCol < matrica.GetLength(1)) &&
-                        (matrica[newRow, newCol] == "*"))
-                    {
-                        minesCounter++;
-                    }
+                    minesCounter++;
                 }
-                matrica[minesRow, minesCol] += Convert.ToString(minesCounter);
             }
-            return isKilled;
+
+            return minesCounter;
+        }
+
+        private static void ValidateCoordinates(int row, int col)
+        {
+            if (row < 0 || MatrixRows <= row)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("Invalid row value: {0}! It must be in the range [0, {1}]!",
+                    row, MatrixRows));
+            }
+
+            if (col < 0 || MatrixCols <= col)
+            {
+                throw new ArgumentOutOfRangeException(string.Format("Invalid column value: {0}! It must be in the range [0, {1}]!",
+                    col, MatrixCols));
+            }
         }
     }
 }

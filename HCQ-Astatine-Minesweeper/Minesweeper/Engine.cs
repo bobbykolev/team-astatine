@@ -8,26 +8,25 @@
         public static void PlayMines()
         {
             ScoreBoard scoreBoard = new ScoreBoard();
-            Random randomMines;
-            string[,] minichki;
-            int row;
-            int col;
-            int minesCounter;
-            int revealedCellsCounter;
-            bool isBoomed;
+            Field gameField = new Field();
+
+            int row = 0;
+            int col = 0;
+            int minesCounter = 0;
+            int revealedCellsCounter = 0;
+            bool isBoomed = false;
 
         // oxo glei glei
         // i go to si imam :)
         start:
-            Field.Zapochni(out minichki, out row, out col, out isBoomed, out minesCounter, out randomMines, out revealedCellsCounter);
-
-            Field.FillWithRandomMines(minichki, randomMines);
+            StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
+            gameField.FillWithRandomMines();
 
             GameRenderer.PrintInitialMessage();
 
             while (true)
             {
-                GameRenderer.Display(minichki, isBoomed);
+                GameRenderer.Display(gameField.Matrix, isBoomed);
             enterRowCol:
                 Console.Write("Enter row and column: ");
                 string line = Console.ReadLine();
@@ -39,13 +38,14 @@
                     row = int.Parse(inputParams[0]);
                     col = int.Parse(inputParams[1]);
 
-                    if ((row >= 0) && (row < minichki.GetLength(0)) && (col >= 0) && (col < minichki.GetLength(1)))
+                    if ((row >= 0) && (row < gameField.Rows) && (col >= 0) && (col < gameField.Cols))
                     {
-                        bool hasBoomedMine = Field.Boom(minichki, row, col);
+                        bool hasBoomedMine = gameField.CheckIfIsMine(row, col);
+
                         if (hasBoomedMine)
                         {
                             isBoomed = true;
-                            GameRenderer.Display(minichki, isBoomed);
+                            GameRenderer.Display(gameField.Matrix, isBoomed);
                             Console.Write("\nBooom! You are killed by a mine! ");
                             Console.WriteLine("You revealed {0} cells without mines.", revealedCellsCounter);
 
@@ -57,7 +57,7 @@
                             goto start;
                         }
 
-                        bool winner = PichLiSi(minichki, minesCounter);
+                        bool winner = PichLiSi(gameField.Matrix, minesCounter);
                         if (winner)
                         {
                             Console.WriteLine("Congratulations! You are the WINNER!\n");
@@ -70,6 +70,7 @@
                             goto start;
                         }
 
+                        gameField.Update(row, col);
                         revealedCellsCounter++;
                     }
                     else
@@ -160,6 +161,17 @@
             }
 
             return isWinner;
+        }
+
+        private static void StartNewGame(Field gameField, ref int row,  ref int col, ref int minesCounter, 
+            ref int revealedCellsCounter, ref bool isBoomed)
+        {
+            gameField.Clear();
+            row = 0;
+            col = 0;
+            minesCounter = 0;
+            revealedCellsCounter = 0;
+            isBoomed = false;
         }
     }
 }
