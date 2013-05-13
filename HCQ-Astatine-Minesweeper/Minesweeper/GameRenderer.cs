@@ -17,8 +17,11 @@
             Console.WriteLine(startMessage + "\n");
         }
 
-        // TODO: Rename; push an object of type 
-        public static void Display(string[,] tableAsMatrix, bool boomed)
+        // TODO: Rename; push/ <summary>
+        /// Print the playing table
+        /// </summary>
+        /// <param name="tableAsMatrix">render the table</param>
+        /// <param name="boomed">check if player has explode</param>tic void Display(string[,] tableAsMatrix, bool boomed)
         {
             Console.WriteLine();
             Console.WriteLine("     0 1 2 3 4 5 6 7 8 9");
@@ -39,14 +42,9 @@
         }
 
         /// <summary>
-        /// Method renders the playing table
-        /// </summary>
-        /// <param name="currentSymbolInMatrix">consist the current symbol on table</param>
-        /// <param name="boomed">shows if player alredy find a mine</param>
-        private static void RenderPlayingTable(string currentSymbolInMatrix, bool boomed)
+        /// Method renders currentSymbolInMatrix, bool boomed)
         {
-            //TO DO: to think about make it with switch-case
-            if (!(boomed) && ((currentSymbolInMatrix == string.Empty) || (currentSymbolInMatrix == "*")))
+            //TO DO: to think about make it with switch-casng.Empty) || (currentSymbolInMatrix == "*")))
             {
                 Console.Write(" ?");
             }

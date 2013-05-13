@@ -2,6 +2,7 @@
 {
     using System;
     using System.Linq;
+    using System.Text;
     using Wintellect.PowerCollections;
 
     /// <summary>
@@ -52,17 +53,21 @@
         /// <summary>
         /// This method render the scoreboard
         /// </summary>
-        public void PrintScoreBoard()
+        /// <returns>a string which shows table with players' score result</returns>
+        public string PrintScoreBoard()
         {
-            Console.WriteLine();
-
             if (this.scoreBoard.Values.Count == 0)
             {
-                Console.WriteLine("Scoreboard empty!");
+                string emptyScoreBoard = "\n\rScoreboard empty!";
+
+                //just return string which said table is empty, no players were played
+                return emptyScoreBoard;
             }
             else
             {
-                Console.WriteLine("Scoreboard:");
+                //a stringbuilder will keep the entire table
+                StringBuilder scoreBoard = new StringBuilder();
+                scoreBoard.Append("\n\rScoreboard:"); //this is the header of the table
 
                 int currentPlayer = 1; orderedScoreDescending = this.scoreBoard.Keys.OrderByDescending(obj => obj);
                 foreach (int key in orderedScoreDescending)
@@ -72,15 +77,17 @@
                     foreach (string person in this.scoreBoard[key]){
                         if (currentPlayer <= MAX_SHOWNED_PLAYERS_ON_SCOREBOARD)
                      
-                        {       Console.WriteLine("{0}. {1} --> {2} cells", currentPlayer, person, key);
-                     
+                        {       Console.WriteLine("{0}//add every loop the current player which have score. The maximum players in table are 5
+                            scoreBoard.Append(string.Format("\n\r{0}. {1} --> {2} cells", currentPlayer, person, key)  
                             currentPlayer++;
                         }
                     }
                 }
+                
+                //the entire scoreboard table is here and it is made to be a string with method ToString();
+                //Now the game is printing nothing, cause no Console is used.
+                return scoreBoard.ToString();
             }
-
-            Console.WriteLine();
         }
     }
 }
