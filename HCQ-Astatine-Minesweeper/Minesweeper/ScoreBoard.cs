@@ -8,36 +8,36 @@
     /// Class for printing players' scores
     /// </summary>
     class ScoreBoard
-    {
-        /// <summary>
+    {       /// <summary>
         /// const for visualisation maximum player on scoreboard
         /// </summary>
+   
         private const int MAX_SHOWNED_PLAYERS_ON_SCOREBOARD = 5;
-
-        /// <summary>
+     /// <summary>
         /// OrderedMultiDictionary for keeping player's nickname and score
         /// </summary>
+     
         private readonly OrderedMultiDictionary<int, string> scoreBoard;
-
-        /// <summary>
+   /// <summary>
         /// Constructor which make an instance of OrderedMultiDictionary
         /// </summary>
+       
         public ScoreBoard()
         {
             this.scoreBoard = new OrderedMultiDictionary<int, string>(true);
         }
-
-        /// <summary>
+ /// <summary>
         /// Method which add new player on scoreboard
         /// </summary>
         /// <param name="playerName">player's nickname as string</param>
         /// <param name="playerScore">player's score as int</param>
-        public void AddPlayer(string playerName, int playerScore)
-        {
-            if ((playerName == null) || (playerName == string.Empty))
+        pub
+        public void AddPlayer(string playerName, int playerScore)           if ((playerName == null) || (playerName == string.Empty))
             {
                 throw new ArgumentNullException("You cannot play without a nickname");
             }
+
+            if
 
             if (!this.scoreBoard.ContainsKey(playerScore))
             {
@@ -64,15 +64,16 @@
             {
                 Console.WriteLine("Scoreboard:");
 
-                int currentPlayer = 1;
-                var orderedScoreDescending = this.scoreBoard.Keys.OrderByDescending(obj => obj);
+                int currentPlayer = 1; orderedScoreDescending = this.scoreBoard.Keys.OrderByDescending(obj => obj);
                 foreach (int key in orderedScoreDescending)
                 {
-                    foreach (string person in this.scoreBoard[key])
-                    {
+  
+                {
+                    foreach (string person in this.scoreBoard[key]){
                         if (currentPlayer <= MAX_SHOWNED_PLAYERS_ON_SCOREBOARD)
-                        {
-                            Console.WriteLine("{0}. {1} --> {2} cells", currentPlayer, person, key);
+                     
+                        {       Console.WriteLine("{0}. {1} --> {2} cells", currentPlayer, person, key);
+                     
                             currentPlayer++;
                         }
                     }
