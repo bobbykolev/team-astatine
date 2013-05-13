@@ -16,8 +16,6 @@
             int revealedCellsCounter = 0;
             bool isBoomed = false;
 
-        // oxo glei glei
-        // i go to si imam :)
         start:
             StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
             gameField.FillWithRandomMines();
@@ -29,12 +27,12 @@
                 GameRenderer.Display(gameField.Matrix, isBoomed);
             enterRowCol:
                 Console.Write("Enter row and column: ");
-                string line = Console.ReadLine();
-                line = line.Trim();
+                string input = Console.ReadLine();
+                input = input.Trim();
 
-                if (IsMoveEntered(line))
+                if (IsMoveEntered(input))
                 {
-                    string[] inputParams = line.Split();
+                    string[] inputParams = input.Split();
                     row = int.Parse(inputParams[0]);
                     col = int.Parse(inputParams[1]);
 
@@ -49,7 +47,7 @@
                             Console.Write("\nBooom! You are killed by a mine! ");
                             Console.WriteLine("You revealed {0} cells without mines.", revealedCellsCounter);
 
-                            Console.Write("Please enter your name for the top scoreboard: ");
+                            Console.Write("Please enter your name: ");
                             string currentPlayerName = Console.ReadLine();
                             scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
 
@@ -57,7 +55,7 @@
                             goto start;
                         }
 
-                        bool winner = PichLiSi(gameField.Matrix, minesCounter);
+                        bool winner = IsItWinner(gameField.Matrix, minesCounter);
                         if (winner)
                         {
                             Console.WriteLine("Congratulations! You are the WINNER!\n");
@@ -78,9 +76,9 @@
                         Console.WriteLine("Enter valid Row/Col!\n");
                     }
                 }
-                else if (IsInputCorrect(line))
+                else if (IsInputCorrect(input))
                 {
-                    switch (line)
+                    switch (input)
                     {
                         case "top":
                             {
@@ -140,7 +138,7 @@
             return validMove;
         }
 
-        private static bool PichLiSi(string[,] matrix, int cntMines)
+        private static bool IsItWinner(string[,] matrix, int cntMines)
         {
             bool isWinner = false;
             int counter = 0;
