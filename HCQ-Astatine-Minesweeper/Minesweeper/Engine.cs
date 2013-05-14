@@ -47,8 +47,7 @@
                     else if (input == "exit")
                     {
                         ConsoleIOManager.PrintQuitMessage();
-                 
-                      break;
+                        break;
                     }
                 
                     else if (input == "restart")
