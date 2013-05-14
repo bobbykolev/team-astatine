@@ -16,7 +16,11 @@
             int revealedCellsCounter = 0;
             bool isBoomed = false;
 
-        start:
+            GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
+        }
+  
+        private static void GameInitialization(Field gameField, ScoreBoard scoreBoard, ref int row, ref int col, ref int minesCounter, ref int revealedCellsCounter, ref bool isBoomed)
+        {
             StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
             gameField.FillWithRandomMines();
 
@@ -27,77 +31,76 @@
             while (true)
             {
                 ConsoleIOManager.PrintGameField(gameField, isBoomed);
-            enterRowCol:
                 input = ConsoleIOManager.GetUserInput();
 
                 if (IsMoveEntered(input))
                 {
-                    string[] inputParams = input.Split();
-                    row = int.Parse(inputParams[0]);
-                    col = int.Parse(inputParams[1]);
-
-                    if ((row >= 0) && (row < gameField.Rows) && (col >= 0) && (col < gameField.Cols))
-                    {
-                        bool hasBoomedMine = gameField.CheckIfIsMine(row, col);
-
-                        if (hasBoomedMine)
-                        {
-                            isBoomed = true;
-                            ConsoleIOManager.PrintGameField(gameField, isBoomed);
-                            ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
-
-                            string currentPlayerName = ConsoleIOManager.GetUserNickname();
-                            scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
-
-                            goto start;
-                        }
-
-                        bool winner = IsItWinner(gameField.Matrix, minesCounter);
-
-                        if (winner)
-                        {
-                            ConsoleIOManager.PrintWinnerMessage();
-
-                            string currentPlayerName = ConsoleIOManager.GetUserNickname();
-                            scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
-
-                            goto start;
-                        }
-
-                        gameField.Update(row, col);
-                        revealedCellsCounter++;
-                    }
-                    else
-                    {
-                        ConsoleIOManager.PrintInvalidCommandMessage();
-                    }
+                    FindTheWinner(input, gameField, scoreBoard, minesCounter, ref row, ref col, ref isBoomed, ref revealedCellsCounter);
                 }
                 else if (IsInputCorrect(input))
                 {
-                    switch (input)
+                    if (input == "top")
                     {
-                        case "top":
-                            {
-                                ConsoleIOManager.PrintScoreBoard(scoreBoard);
-                                goto enterRowCol;
-                            }
-
-                        case "exit":
-                            {
-                                ConsoleIOManager.PrintQuitMessage();
-                                return;
-                            }
-
-                        case "restart":
-                            {
-                                goto start;
-                            }
+                        ConsoleIOManager.PrintScoreBoard(scoreBoard);
+                        GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
                     }
+                    else if (input == "exit")
+                    {
+                        ConsoleIOManager.PrintQuitMessage();
+                    }
+                    else if (input == "restart")
+                    {
+                        GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
+                    }
+
                 }
                 else
                 {
                     Console.WriteLine("Invalid Command!");
                 }
+            }
+        }
+  
+        private static void FindTheWinner(string input, Field gameField, ScoreBoard scoreBoard, int minesCounter, ref int row, ref int col, ref bool isBoomed, ref int revealedCellsCounter)
+        {
+            string[] inputParams = input.Split();
+            row = int.Parse(inputParams[0]);
+            col = int.Parse(inputParams[1]);
+
+            if ((row >= 0) && (row < gameField.Rows) && (col >= 0) && (col < gameField.Cols))
+            {
+                bool hasBoomedMine = gameField.CheckIfIsMine(row, col);
+
+                if (hasBoomedMine)
+                {
+                    isBoomed = true;
+                    ConsoleIOManager.PrintGameField(gameField, isBoomed);
+                    ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
+
+                    string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                    scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
+
+                    GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
+                }
+
+                bool winner = IsItWinner(gameField.Matrix, minesCounter);
+
+                if (winner)
+                {
+                    ConsoleIOManager.PrintWinnerMessage();
+
+                    string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                    scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
+
+                    GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
+                }
+
+                gameField.Update(row, col);
+                revealedCellsCounter++;
+            }
+            else
+            {
+                ConsoleIOManager.PrintInvalidCommandMessage();
             }
         }
 
