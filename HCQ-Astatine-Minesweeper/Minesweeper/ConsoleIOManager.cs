@@ -119,21 +119,21 @@
             return playerNickname;
         }
 
-        private static void PrintCurrentSymbol(string currentSymbol, bool hasBoomed)
+        private static void PrintCurrentSymbol(string currentSymbol, bool hasExploded)
         {
-            if (!(hasBoomed) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
+            if (!(hasExploded) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
             {
                 Console.Write(" ?");
             }
-            else if (!(hasBoomed) && (currentSymbol != string.Empty) && (currentSymbol != "*"))
+            else if (!(hasExploded) && (currentSymbol != string.Empty) && (currentSymbol != "*"))
             {
                 Console.Write(" {0}", currentSymbol);
             }
-            else if ((hasBoomed) && (currentSymbol == string.Empty))
+            else if ((hasExploded) && (currentSymbol == string.Empty))
             {
                 Console.Write(" -");
             }
-            else if ((hasBoomed) && (currentSymbol != string.Empty))
+            else if ((hasExploded) && (currentSymbol != string.Empty))
             {
                 Console.Write(" {0}", currentSymbol);
             }

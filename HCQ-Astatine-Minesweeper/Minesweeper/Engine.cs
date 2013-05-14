@@ -14,96 +14,115 @@
             int col = 0;
             int minesCounter = 0;
             int revealedCellsCounter = 0;
-            bool isBoomed = false;
-
-            GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-        }
-  
-        private static void GameInitialization(Field gameField, ScoreBoard scoreBoard, ref int row, ref int col, ref int minesCounter, ref int revealedCellsCounter, ref bool isBoomed)
-        {
-            StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-            gameField.FillWithRandomMines();
-
-            ConsoleIOManager.PrintInitialMessage();
-
-            string input = string.Empty;
+            bool hasExploded = false;
 
             while (true)
             {
-                ConsoleIOManager.PrintGameField(gameField, isBoomed);
-                input = ConsoleIOManager.GetUserInput();
+                ConsoleIOManager.PrintInitialMessage();
+                StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref hasExploded);
 
-                if (IsMoveEntered(input))
-                {
-                    FindTheWinner(input, gameField, scoreBoard, minesCounter, ref row, ref col, ref isBoomed, ref revealedCellsCounter);
-                }
-                else if (IsInputCorrect(input))
-                {
-                    if (input == "top")
-                    {
-                        ConsoleIOManager.PrintScoreBoard(scoreBoard);
-                        GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-                    }
-                    else if (input == "exit")
-                    {
-                        ConsoleIOManager.PrintQuitMessage();
-                        break;
-                    }
-                
-                    else if (input == "restart")
-                    {
-                        GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-                    }
+                ConsoleIOManager.PrintGameField(gameField, hasExploded);
 
-                }
-               else
+                bool rowAndColAreValid = false;
+                string input = string.Empty;
+
+                while (true)
                 {
-                    Console.WriteLine("Invalid Command!");
+                    input = ConsoleIOManager.GetUserInput();
+
+                    if (IsMoveEntered(input))
+                    {
+                        string[] inputParams = input.Split();
+                        row = int.Parse(inputParams[0]);
+                        col = int.Parse(inputParams[1]);
+
+                        rowAndColAreValid = ValidateRowAndCol(gameField, row, col);
+
+                        if (rowAndColAreValid)
+                        {
+                            bool cellHasMine = gameField.CheckIfIsMine(row, col);
+
+                            if (cellHasMine)
+                            {
+                                hasExploded = true;
+                                ConsoleIOManager.PrintGameField(gameField, hasExploded);
+                                ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
+
+                                string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                                scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
+
+                                ConsoleIOManager.PrintScoreBoard(scoreBoard);
+                                break;
+                            }
+
+                            bool winner = IsWinner(gameField.Matrix, minesCounter);
+
+                            if (winner)
+                            {
+                                ConsoleIOManager.PrintWinnerMessage();
+
+                                string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                                scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
+
+                                break;
+                            }
+
+                            gameField.Update(row, col);
+                            revealedCellsCounter++;
+
+                            ConsoleIOManager.PrintGameField(gameField, cellHasMine);
+                        }
+                        else
+                        {
+                            ConsoleIOManager.PrintInvalidCommandMessage();
+                        }
+                    }
+                    else if (IsInputCorrect(input))
+                    {
+                        bool isRestart = false;
+
+                        switch (input)
+                        {
+                            case "top":
+                                {
+                                    ConsoleIOManager.PrintScoreBoard(scoreBoard);
+                                    continue;
+                                }
+
+                            case "exit":
+                                {
+                                    ConsoleIOManager.PrintQuitMessage();
+                                    return;
+                                }
+
+                            case "restart":
+                                {
+                                    isRestart = true;
+                                    break;
+                                }
+                        }
+
+                        if (isRestart)
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        ConsoleIOManager.PrintInvalidCommandMessage();
+                    }
                 }
             }
         }
-  
-        private static void FindTheWinner(string input, Field gameField, ScoreBoard scoreBoard, int minesCounter, ref int row, ref int col, ref bool isBoomed, ref int revealedCellsCounter)
+
+        private static bool ValidateRowAndCol(Field gameField, int row, int col)
         {
-            string[] inputParams = input.Split();
-            row = int.Parse(inputParams[0]);
-            col = int.Parse(inputParams[1]);
+            bool validRow = 0 <= row && row < gameField.Rows;
+            bool validCol = 0 <= col && col < gameField.Cols;
 
-            if ((row >= 0) && (row < gameField.Rows) && (col >= 0) && (col < gameField.Cols))
-            {
-                bool hasBoomedMine = gameField.CheckIfIsMine(row, col);
+            bool validRowAndCol = validRow && validCol;
 
-                if (hasBoomedMine)
-                {
-                    isBoomed = true;
-                    ConsoleIOManager.PrintGameField(gameField, isBoomed);
-                    ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
-
-                    string currentPlayerName = ConsoleIOManager.GetUserNickname();
-                    scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
-
-                    GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-                }
-
-                bool winner = IsItWinner(gameField.Matrix, minesCounter);
-
-                if (winner)
-                {
-                    ConsoleIOManager.PrintWinnerMessage();
-
-                    string currentPlayerName = ConsoleIOManager.GetUserNickname();
-                    scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
-
-                    GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
-                }
-
-                gameField.Update(row, col);
-                revealedCellsCounter++;
-            }
-            else
-            {
-                ConsoleIOManager.PrintInvalidCommandMessage();
-            }
+            return validRowAndCol;
         }
 
         private static bool IsInputCorrect(string input)
@@ -129,7 +148,7 @@
 
                 validMove = true;
             }
-            catch
+            catch (FormatException fe)
             {
                 validMove = false;
             }
@@ -137,7 +156,7 @@
             return validMove;
         }
 
-        private static bool IsItWinner(string[,] matrix, int cntMines)
+        private static bool IsWinner(string[,] matrix, int cntMines)
         {
             bool isWinner = false;
             int counter = 0;
@@ -160,15 +179,17 @@
             return isWinner;
         }
 
-        private static void StartNewGame(Field gameField, ref int row,  ref int col, ref int minesCounter, 
+        private static void StartNewGame(Field gameField, ref int row, ref int col, ref int minesCounter,
             ref int revealedCellsCounter, ref bool isBoomed)
         {
-            gameField.Clear();
             row = 0;
             col = 0;
             minesCounter = 0;
             revealedCellsCounter = 0;
             isBoomed = false;
+
+            gameField.Clear();
+            gameField.FillWithRandomMines();
         }
     }
 }
