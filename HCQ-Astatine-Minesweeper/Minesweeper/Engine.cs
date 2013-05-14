@@ -48,13 +48,14 @@
                     {
                         ConsoleIOManager.PrintQuitMessage();
                     }
+                      break   }
                     else if (input == "restart")
                     {
                         GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
                     }
 
                 }
-                else
+               else
                 {
                     Console.WriteLine("Invalid Command!");
                 }
