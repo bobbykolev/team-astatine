@@ -20,15 +20,15 @@
             StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
             gameField.FillWithRandomMines();
 
-            GameRenderer.PrintInitialMessage();
+            ConsoleIOManager.PrintInitialMessage();
+
+            string input = string.Empty;
 
             while (true)
             {
-                GameRenderer.Display(gameField.Matrix, isBoomed);
+                ConsoleIOManager.PrintGameField(gameField, isBoomed);
             enterRowCol:
-                Console.Write("Enter row and column: ");
-                string input = Console.ReadLine();
-                input = input.Trim();
+                input = ConsoleIOManager.GetUserInput();
 
                 if (IsMoveEntered(input))
                 {
@@ -43,28 +43,24 @@
                         if (hasBoomedMine)
                         {
                             isBoomed = true;
-                            GameRenderer.Display(gameField.Matrix, isBoomed);
-                            Console.Write("\nBooom! You are killed by a mine! ");
-                            Console.WriteLine("You revealed {0} cells without mines.", revealedCellsCounter);
+                            ConsoleIOManager.PrintGameField(gameField, isBoomed);
+                            ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
 
-                            Console.Write("Please enter your name: ");
-                            string currentPlayerName = Console.ReadLine();
+                            string currentPlayerName = ConsoleIOManager.GetUserNickname();
                             scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
 
-                            Console.WriteLine();
                             goto start;
                         }
 
                         bool winner = IsItWinner(gameField.Matrix, minesCounter);
+
                         if (winner)
                         {
-                            Console.WriteLine("Congratulations! You are the WINNER!\n");
+                            ConsoleIOManager.PrintWinnerMessage();
 
-                            Console.Write("Please enter your name for the top scoreboard: ");
-                            string currentPlayerName = Console.ReadLine();
+                            string currentPlayerName = ConsoleIOManager.GetUserNickname();
                             scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
 
-                            Console.WriteLine();
                             goto start;
                         }
 
@@ -73,7 +69,7 @@
                     }
                     else
                     {
-                        Console.WriteLine("Enter valid Row/Col!\n");
+                        ConsoleIOManager.PrintInvalidCommandMessage();
                     }
                 }
                 else if (IsInputCorrect(input))
@@ -82,20 +78,18 @@
                     {
                         case "top":
                             {
-                                scoreBoard.PrintScoreBoard();
+                                ConsoleIOManager.PrintScoreBoard(scoreBoard);
                                 goto enterRowCol;
                             }
 
                         case "exit":
                             {
-                                Console.WriteLine("\nGood bye!\n");
-                                Environment.Exit(0);
-                                break;
+                                ConsoleIOManager.PrintQuitMessage();
+                                return;
                             }
 
                         case "restart":
                             {
-                                Console.WriteLine();
                                 goto start;
                             }
                     }

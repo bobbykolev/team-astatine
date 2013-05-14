@@ -45,7 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Field.cs" />
-    <Compile Include="GameRenderer.cs" />
+    <Compile Include="ConsoleIOManager.cs" />
     <Compile Include="Engine.cs" />
     <Compile Include="Minesweeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

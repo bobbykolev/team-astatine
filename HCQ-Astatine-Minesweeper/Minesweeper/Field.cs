@@ -6,7 +6,7 @@
     /// <summary>
     /// Represents the field of the minesweeper game.
     /// </summary>
-    internal class Field
+    public class Field
     {
         private const int MinesNumber = 15;
         private const int MatrixRows = 5;
@@ -19,7 +19,7 @@
         /// </summary>
         public Field()
         {
-            this.matrix = new string[5, 10];
+            this.matrix = new string[MatrixRows, MatrixCols];
         }
 
         /// <summary>
@@ -51,7 +51,10 @@
         {
             get
             {
-                return this.matrix;
+                string[,] matrixToReturn =(string[,])this.matrix.Clone();
+                Array.Copy(this.matrix, matrixToReturn, this.matrix.Length);
+
+                return matrixToReturn;
             }
         }
 
@@ -107,7 +110,6 @@
 
             int minesCounter = this.CalculateAdjacentMines(row, col);
             this.matrix[row, col] = minesCounter.ToString();
-
         }
 
         /// <summary>
@@ -151,7 +153,7 @@
             return minesCounter;
         }
 
-        private static void ValidateCoordinates(int row, int col)
+        private void ValidateCoordinates(int row, int col)
         {
             if (row < 0 || MatrixRows <= row)
             {
