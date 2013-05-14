@@ -47,8 +47,10 @@
                     else if (input == "exit")
                     {
                         ConsoleIOManager.PrintQuitMessage();
+                 
+                      break;
                     }
-                      break   }
+                
                     else if (input == "restart")
                     {
                         GameInitialization(gameField, scoreBoard, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref isBoomed);
@@ -105,9 +107,9 @@
             }
         }
 
-        private static bool IsInputCorrect(string line)
+        private static bool IsInputCorrect(string input)
         {
-            if (line.Equals("top") || line.Equals("restart") || line.Equals("exit"))
+            if (input.Equals("top") || input.Equals("restart") || input.Equals("exit"))
             {
                 return true;
             }
@@ -117,12 +119,12 @@
             }
         }
 
-        private static bool IsMoveEntered(string line)
+        private static bool IsMoveEntered(string input)
         {
             bool validMove = false;
             try
             {
-                string[] inputParams = line.Split();
+                string[] inputParams = input.Split();
                 int row = int.Parse(inputParams[0]);
                 int col = int.Parse(inputParams[1]);
 
