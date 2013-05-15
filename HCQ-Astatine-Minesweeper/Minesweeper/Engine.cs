@@ -6,7 +6,13 @@
 
     public class Engine
     {
-        public static void PlayMines()
+  
+        private static List<int> rowsList = new List<int>();
+        private static List<int> colsList = new List<int>();
+
+        /// <summary>
+        /// Controls the gameplay throughout other methods for validation.
+        /// </summary>      public static void PlayMines()
         {
             ScoreBoard scoreBoard = new ScoreBoard();
             Field gameField = new Field();
@@ -116,10 +122,7 @@
             }
         }
 
-        static List<int> rowsList = new List<int>();
-        static List<int> colsList = new List<int>();
-
-        private static bool ValidateRowAndCol(Field gameField, int row, int col)
+     private static bool ValidateRowAndCol(Field gameField, int row, int col)
         {
             bool validRow = 0 <= row && row < gameField.Rows;
             bool validCol = 0 <= col && col < gameField.Cols;
@@ -128,7 +131,8 @@
 
             rowsList.Add(row);
             colsList.Add(col);
-            //chack for visited row/col
+          
+            //r visited row/col
             for (int count = 0; count < rowsList.Count - 1; count++)
             {
                 if (colsList[count] == col && rowsList[count] == row)
@@ -195,7 +199,7 @@
         }
 
         private static void StartNewGame(Field gameField, ref int row, ref int col, ref int minesCounter,
-            ref int revealedCellsCounter, ref bool isBoomed)
+            ref inllsCounter, ref bool isBoomed)
         {
             row = 0;
             col = 0;
