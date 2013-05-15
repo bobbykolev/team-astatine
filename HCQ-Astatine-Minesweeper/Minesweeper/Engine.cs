@@ -12,7 +12,8 @@
 
         /// <summary>
         /// Controls the gameplay throughout other methods for validation.
-        /// </summary>      public static void PlayMines()
+        /// </summary>      
+        public static void PlayMines()
         {
             ScoreBoard scoreBoard = new ScoreBoard();
             Field gameField = new Field();
@@ -199,7 +200,7 @@
         }
 
         private static void StartNewGame(Field gameField, ref int row, ref int col, ref int minesCounter,
-            ref inllsCounter, ref bool isBoomed)
+            ref int revealedCellsCounter, ref bool isBoomed)
         {
             row = 0;
             col = 0;
