@@ -1,6 +1,7 @@
 ﻿namespace Minesweeper
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
 
     public class Engine
@@ -115,12 +116,26 @@
             }
         }
 
+        static List<int> rowsList = new List<int>();
+        static List<int> colsList = new List<int>();
+
         private static bool ValidateRowAndCol(Field gameField, int row, int col)
         {
             bool validRow = 0 <= row && row < gameField.Rows;
             bool validCol = 0 <= col && col < gameField.Cols;
 
             bool validRowAndCol = validRow && validCol;
+
+            rowsList.Add(row);
+            colsList.Add(col);
+            //chack for visited row/col
+            for (int count = 0; count < rowsList.Count - 1; count++)
+            {
+                if (colsList[count] == col && rowsList[count] == row)
+                {
+                    validRowAndCol = false;
+                }
+            }
 
             return validRowAndCol;
         }
@@ -190,6 +205,9 @@
 
             gameField.Initialize();
             gameField.FillWithRandomMines();
+
+            rowsList.Clear();
+            colsList.Clear();
         }
     }
 }
