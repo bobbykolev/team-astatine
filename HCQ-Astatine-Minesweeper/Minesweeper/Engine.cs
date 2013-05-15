@@ -40,7 +40,7 @@
 
                         if (rowAndColAreValid)
                         {
-                            bool cellHasMine = gameField.CheckIfIsMine(row, col);
+                            bool cellHasMine = gameField.IsMine(row, col);
 
                             if (cellHasMine)
                             {
@@ -188,7 +188,7 @@
             revealedCellsCounter = 0;
             isBoomed = false;
 
-            gameField.Clear();
+            gameField.Initialize();
             gameField.FillWithRandomMines();
         }
     }

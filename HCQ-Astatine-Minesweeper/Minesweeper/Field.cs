@@ -11,15 +11,19 @@
         private const int MinesNumber = 15;
         private const int MatrixRows = 5;
         private const int MatrixCols = 10;
+        private readonly Random random;
 
         private readonly string[,] matrix;
 
         /// <summary>
-        /// Constructs a new field - a matrix with fixed size.
+        /// Constructs a new field - a matrix with fixed size and initial values.
         /// </summary>
         public Field()
         {
             this.matrix = new string[MatrixRows, MatrixCols];
+            this.random = new Random();
+
+            this.Initialize();
         }
 
         /// <summary>
@@ -51,7 +55,7 @@
         {
             get
             {
-                string[,] matrixToReturn =(string[,])this.matrix.Clone();
+                string[,] matrixToReturn = (string[,])this.matrix.Clone();
                 Array.Copy(this.matrix, matrixToReturn, this.matrix.Length);
 
                 return matrixToReturn;
@@ -63,13 +67,12 @@
         /// </summary>
         public void FillWithRandomMines()
         {
-            Random random = new Random();
             int minesCounter = 0;
 
             while (minesCounter < MinesNumber)
             {
-                int randomRow = random.Next(0, MatrixRows);
-                int randomCol = random.Next(0, MatrixCols);
+                int randomRow = this.random.Next(0, MatrixRows);
+                int randomCol = this.random.Next(0, MatrixCols);
 
                 if (this.matrix[randomRow, randomCol] == string.Empty)
                 {
@@ -85,7 +88,7 @@
         /// <param name="row">The row number of the specified position.</param>
         /// <param name="col">The col number of the specified position.</param>
         /// <returns>Returns true if there is a mine on the specified position. Otherwise returns false.</returns>
-        public bool CheckIfIsMine(int row, int col)
+        public bool IsMine(int row, int col)
         {
             ValidateCoordinates(row, col);
 
@@ -113,9 +116,10 @@
         }
 
         /// <summary>
-        /// Clears the two dimensional matrix of the field. Used to avoid initializing a new field every time when a new game starts.
+        /// Initialize each cell of the two dimensional matrix of the field with <see cref="System.String.Empty"/> value. 
+        /// Used to avoid creating a new field every time when a new game starts.
         /// </summary>
-        public void Clear()
+        public void Initialize()
         {
             for (int i = 0; i < MatrixRows; i++)
             {
@@ -153,7 +157,7 @@
             return minesCounter;
         }
 
-        private void ValidateCoordinates(int row, int col)
+        private static void ValidateCoordinates(int row, int col)
         {
             if (row < 0 || MatrixRows <= row)
             {
