@@ -26,6 +26,11 @@
         /// <param name="hasBoomed">check if player has explode</param>
         public static void PrintGameField(Field gameField, bool hasBoomed)
         {
+            if (gameField == null)
+            {
+                throw new ArgumentNullException("Game field is null!");
+            }
+
             string[,] fieldMatrix = gameField.Matrix;
 
             Console.WriteLine();
@@ -71,6 +76,11 @@
         /// <param name="scoreBoard"></param>
         public static void PrintScoreBoard(ScoreBoard scoreBoard)
         {
+            if (scoreBoard == null)
+            {
+                throw new ArgumentNullException("Scoreboard is null!");
+            }
+
             string generatedList = scoreBoard.Generate();
 
             Console.WriteLine(generatedList);

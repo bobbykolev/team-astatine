@@ -4,14 +4,17 @@
     using System.Collections.Generic;
     using System.Linq;
 
-    public class Engine
+    /// <summary>
+    /// Represents the engine that executes the main logic of the game. 
+    /// </summary>
+    public static class Engine
     {
   
-        private static List<int> rowsList = new List<int>();
-        private static List<int> colsList = new List<int>();
+        private static List<int> visitedRows = new List<int>();
+        private static List<int> visitedCols = new List<int>();
 
         /// <summary>
-        /// Controls the gameplay throughout other methods for validation.
+        /// Controls the gameplay throughout other methods for validation and I/O.
         /// </summary>      
         public static void PlayMines()
         {
@@ -85,7 +88,7 @@
                             ConsoleIOManager.PrintInvalidCommandMessage();
                         }
                     }
-                    else if (IsInputCorrect(input))
+                    else if (IsCommandEntered(input))
                     {
                         bool isRestart = false;
 
@@ -130,13 +133,12 @@
 
             bool validRowAndCol = validRow && validCol;
 
-            rowsList.Add(row);
-            colsList.Add(col);
+            visitedRows.Add(row);
+            visitedCols.Add(col);
           
-            //r visited row/col
-            for (int count = 0; count < rowsList.Count - 1; count++)
+            for (int count = 0; count < visitedRows.Count - 1; count++)
             {
-                if (colsList[count] == col && rowsList[count] == row)
+                if (visitedCols[count] == col && visitedRows[count] == row)
                 {
                     validRowAndCol = false;
                 }
@@ -145,7 +147,7 @@
             return validRowAndCol;
         }
 
-        private static bool IsInputCorrect(string input)
+        private static bool IsCommandEntered(string input)
         {
             if (input.Equals("top") || input.Equals("restart") || input.Equals("exit"))
             {
@@ -211,8 +213,8 @@
             gameField.Initialize();
             gameField.FillWithRandomMines();
 
-            rowsList.Clear();
-            colsList.Clear();
+            visitedRows.Clear();
+            visitedCols.Clear();
         }
     }
 }
