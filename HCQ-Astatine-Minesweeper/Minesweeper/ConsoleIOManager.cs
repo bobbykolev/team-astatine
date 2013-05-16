@@ -11,12 +11,14 @@
         /// <summary>
         /// Prints the initial message - welcome message and commands list
         /// </summary>
-        public static void PrintInitialMessage()
+        public static string PrintInitialMessage()
         {
             string welcomeMessage = @"Welcome to the game “Minesweeper”. Try to reveal all cells without mines.";
             string commands = "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit  the game.";
 
             Console.WriteLine(welcomeMessage + " " + commands);
+
+            return welcomeMessage + " " + commands;
         }
 
         /// <summary>
