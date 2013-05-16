@@ -8,7 +8,7 @@
     /// <summary>
     /// Represents a scoreboard.
     /// </summary>
-    public class ScoreBoard
+    public class ScoreBoard : IScoreBoard
     {
         private const int MaxShowedPlayersCount = 5;
 
@@ -23,7 +23,7 @@
         }
 
         /// <summary>
-        /// Method which adds a new player to the scoreboard.
+        /// Adds a new player to the scoreboard.
         /// </summary>
         /// <param name="playerName">Player's nickname.</param>
         /// <param name="playerScore">Player's score.</param>
@@ -45,9 +45,9 @@
         }
 
         /// <summary>
-        /// This method render the scoreboard
+        /// Generates the scoreboard with the specified number of top players and returns it as string.
         /// </summary>
-        /// <returns>a string which shows table with players' score result</returns>
+        /// <returns>The generated scoreboard as string.</returns>
         public string Generate()
         {
             if (this.scoreBoard.Values.Count == 0)

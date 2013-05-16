@@ -6,7 +6,7 @@
     /// <summary>
     /// Represents the field of the minesweeper game.
     /// </summary>
-    public class Field
+    public class Field : IField
     {
         private const int MinesNumber = 15;
         private const int MatrixRows = 5;

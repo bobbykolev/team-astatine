@@ -9,7 +9,6 @@
     /// </summary>
     public static class Engine
     {
-  
         private static List<int> visitedRows = new List<int>();
         private static List<int> visitedCols = new List<int>();
 
@@ -18,8 +17,8 @@
         /// </summary>      
         public static void PlayMines()
         {
-            ScoreBoard scoreBoard = new ScoreBoard();
-            Field gameField = new Field();
+            IScoreBoard scoreBoard = new ScoreBoard();
+            IField gameField = new Field();
 
             int row = 0;
             int col = 0;
@@ -126,16 +125,16 @@
             }
         }
 
-     private static bool ValidateRowAndCol(Field gameField, int row, int col)
+        private static bool ValidateRowAndCol(IField gameField, int row, int col)
         {
             bool validRow = 0 <= row && row < gameField.Rows;
             bool validCol = 0 <= col && col < gameField.Cols;
 
             bool validRowAndCol = validRow && validCol;
-
+            
             visitedRows.Add(row);
             visitedCols.Add(col);
-          
+
             for (int count = 0; count < visitedRows.Count - 1; count++)
             {
                 if (visitedCols[count] == col && visitedRows[count] == row)
@@ -201,7 +200,7 @@
             return isWinner;
         }
 
-        private static void StartNewGame(Field gameField, ref int row, ref int col, ref int minesCounter,
+        private static void StartNewGame(IField gameField, ref int row, ref int col, ref int minesCounter,
             ref int revealedCellsCounter, ref bool isBoomed)
         {
             row = 0;

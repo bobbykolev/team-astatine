@@ -19,12 +19,12 @@
             Console.WriteLine(welcomeMessage + " " + commands);
         }
 
-        ///<summary>
+        /// <summary>
         /// Prints the game field.
         /// </summary>
         /// <param name="gameField">The field to be printed.</param>
         /// <param name="hasBoomed">check if player has explode</param>
-        public static void PrintGameField(Field gameField, bool hasBoomed)
+        public static void PrintGameField(IField gameField, bool hasBoomed)
         {
             if (gameField == null)
             {
@@ -74,7 +74,7 @@
         /// Prints a scoreboard.
         /// </summary>
         /// <param name="scoreBoard"></param>
-        public static void PrintScoreBoard(ScoreBoard scoreBoard)
+        public static void PrintScoreBoard(IScoreBoard scoreBoard)
         {
             if (scoreBoard == null)
             {

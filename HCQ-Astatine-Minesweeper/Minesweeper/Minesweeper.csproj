@@ -47,6 +47,8 @@
     <Compile Include="Field.cs" />
     <Compile Include="ConsoleIOManager.cs" />
     <Compile Include="Engine.cs" />
+    <Compile Include="IField.cs" />
+    <Compile Include="IScoreBoard.cs" />
     <Compile Include="Minesweeper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScoreBoard.cs" />

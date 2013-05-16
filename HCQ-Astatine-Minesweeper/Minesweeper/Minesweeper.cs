@@ -3,9 +3,9 @@
     using System;
     using System.Linq;
 
-    class Minesweeper
+    public class Minesweeper
     {
-        static void Main()
+        public static void Main()
         {
             Engine.PlayMines();
         }
