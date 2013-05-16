@@ -35,9 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Minesweeper">
-      <HintPath>..\Minesweeper\bin\Debug\Minesweeper.exe</HintPath>
-    </Reference>
     <Reference Include="PowerCollections, Version=1.0.2141.24679, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Minesweeper\lib\PowerCollections.dll</HintPath>
@@ -62,6 +59,12 @@
     <Compile Include="TestField.cs" />
     <Compile Include="TestConsoleIOManager.cs" />
     <Compile Include="TestScoreBoard.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Minesweeper\Minesweeper.csproj">
+      <Project>{fb88582f-855d-43f8-829c-b676da9da3ea}</Project>
+      <Name>Minesweeper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
