@@ -29,9 +29,14 @@
         /// <param name="playerScore">Player's score.</param>
         public void AddPlayer(string playerName, int playerScore)
         {
-            if ((playerName == null) || (playerName == string.Empty))
+            if (string.IsNullOrEmpty(playerName))
             {
-                throw new ArgumentNullException("You cannot play without a nickname");
+                throw new ArgumentNullException("Nickname cannot be null or empty!");
+            }
+
+            if (string.IsNullOrWhiteSpace(playerName))
+            {
+                throw new ArgumentException("Nickname cannot contain only white spaces!");
             }
 
             if (!this.scoreBoard.ContainsKey(playerScore))

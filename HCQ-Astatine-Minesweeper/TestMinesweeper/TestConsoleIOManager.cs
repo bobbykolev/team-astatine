@@ -14,7 +14,7 @@ namespace TestMinesweeper
             string welcomeMessage = @"Welcome to the game “Minesweeper”. Try to reveal all cells without mines.";
             string commands = "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit  the game.";
             string outputMessage = ConsoleIOManager.PrintInitialMessage();
-            Assert.AreEqual(outputMessage,(welcomeMessage + " " + commands));
+            Assert.AreEqual(outputMessage, (welcomeMessage + " " + commands));
         }
 
         [TestMethod]
@@ -44,10 +44,10 @@ namespace TestMinesweeper
             using (ConsoleRedirector cr = new ConsoleRedirector())
             {
                 int score = 5;
-                Assert.IsFalse(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " + 
+                Assert.IsFalse(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " +
                     score + " cells without mines."));
                 ConsoleIOManager.PrintExplosionMessage(score);
-                Assert.IsTrue(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " + 
+                Assert.IsTrue(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " +
                     score + " cells without mines."));
             }
         }
