@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// An interface for the field of the game.
+    /// </summary>
     public interface IField
     {
         /// <summary>

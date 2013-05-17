@@ -19,7 +19,7 @@
             Console.WriteLine(welcomeMessage + " " + commands);
 
             return welcomeMessage + " " + commands;
- 
+
         }
 
         /// <summary>
@@ -55,8 +55,8 @@
             Console.WriteLine("   ---------------------");
         }
 
-        /// <summary>       /// Prints an explosion message when the user step on a mine.
- 
+        /// <summary>
+        /// Prints an explosion message when the user step on a mine.
         /// </summary>
         public static void PrintExplosionMessage(int score)
         {
@@ -93,8 +93,9 @@
         /// Prints a message on invalid user input.
         /// </summary>
         public static void PrintInvalidCommandMessage()
-        {           Console.WriteLine("Invalid row/col entered! Try again!");
- 
+        {
+            Console.WriteLine("Invalid row/col entered! Try again!");
+
         }
 
         /// <summary>
@@ -137,16 +138,16 @@
         }
 
         private static void PrintCurrentSymbol(string currentSymbol, bool hasExploded)
-        {           if (!(hasExploded) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
- 
+        {
+            if (!(hasExploded) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
             {
                 Console.Write(" ?");
             }
             else if (!(hasExploded) && (currentSymbol != string.Empty) && (currentSymbol != "*"))
             {
                 Console.Write(" {0}", currentSymbol);
-            }           else if ((hasExploded) && (currentSymbol == string.Empty))
- 
+            }
+            else if ((hasExploded) && (currentSymbol == string.Empty))
             {
                 Console.Write(" -");
             }

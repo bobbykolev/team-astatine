@@ -2,13 +2,16 @@
 {
     using System;
 
+    /// <summary>
+    /// An interface for the score board of the game.
+    /// </summary>
     public interface IScoreBoard
     {
         /// <summary>
         /// Adds a new player to the scoreboard.
         /// </summary>
-        /// <param name="playerName">Player's nickname.</param>
-        /// <param name="playerScore">Player's score.</param>
+        /// <param name="name">Player's nickname.</param>
+        /// <param name="score">Player's score.</param>
         void AddPlayer(string name, int score);
 
         /// <summary>

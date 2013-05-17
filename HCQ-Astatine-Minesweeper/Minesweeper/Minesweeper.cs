@@ -3,9 +3,12 @@
     using System;
     using System.Linq;
 
+    /// <summary>
+    /// Represents the main application from which will start the game.
+    /// </summary>
     public class Minesweeper
     {
-        public static void Main()
+        internal static void Main()
         {
             Engine.PlayMines();
         }
