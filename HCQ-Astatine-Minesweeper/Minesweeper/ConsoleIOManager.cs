@@ -115,7 +115,7 @@
 
             string input = Console.ReadLine();
             input = input.Trim();
-            if (input.Length != 2)
+            if (input.Length < 2)
             {
                 throw new ArgumentException("Enter two numbers - one for row, one for col");
             }
