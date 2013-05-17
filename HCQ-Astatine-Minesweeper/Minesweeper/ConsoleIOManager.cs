@@ -19,6 +19,7 @@
             Console.WriteLine(welcomeMessage + " " + commands);
 
             return welcomeMessage + " " + commands;
+ 
         }
 
         /// <summary>
@@ -54,13 +55,13 @@
             Console.WriteLine("   ---------------------");
         }
 
-        /// <summary>
-        /// Prints an explosion message when the user step on a mine.
+        /// <summary>       /// Prints an explosion message when the user step on a mine.
+ 
         /// </summary>
         public static void PrintExplosionMessage(int score)
         {
-            Console.Write("\nBooom! You are killed by a mine! ");
-            Console.WriteLine("You revealed {0} cells without mines.", score);
+            Console.WriteLine("\nBooom! You are killed by a mine!" +
+                "You revealed {0} cells without mines.", score);
         }
 
         /// <summary>
@@ -68,8 +69,8 @@
         /// </summary>
         public static void PrintWinnerMessage()
         {
-            Console.WriteLine("Congratulations! You are the WINNER!\n");
-            Console.Write("Please enter your name for the top scoreboard: ");
+            Console.WriteLine("Congratulations! You are the WINNER!\n" +
+                 "Please enter your name for the top scoreboard: ");
         }
 
         /// <summary>
@@ -92,8 +93,8 @@
         /// Prints a message on invalid user input.
         /// </summary>
         public static void PrintInvalidCommandMessage()
-        {
-            Console.WriteLine("Invalid row/col entered! Try again!");
+        {           Console.WriteLine("Invalid row/col entered! Try again!");
+ 
         }
 
         /// <summary>
@@ -114,6 +115,10 @@
 
             string input = Console.ReadLine();
             input = input.Trim();
+            if (input.Length != 2)
+            {
+                throw new ArgumentException("Enter two numbers - one for row, one for col");
+            }
 
             return input;
         }
@@ -132,16 +137,16 @@
         }
 
         private static void PrintCurrentSymbol(string currentSymbol, bool hasExploded)
-        {
-            if (!(hasExploded) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
+        {           if (!(hasExploded) && ((currentSymbol == string.Empty) || (currentSymbol == "*")))
+ 
             {
                 Console.Write(" ?");
             }
             else if (!(hasExploded) && (currentSymbol != string.Empty) && (currentSymbol != "*"))
             {
                 Console.Write(" {0}", currentSymbol);
-            }
-            else if ((hasExploded) && (currentSymbol == string.Empty))
+            }           else if ((hasExploded) && (currentSymbol == string.Empty))
+ 
             {
                 Console.Write(" -");
             }
