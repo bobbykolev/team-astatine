@@ -6,12 +6,12 @@
     /// <summary>
     /// Manages the input and output operations of the game.
     /// </summary>
-    public static class ConsoleIOManager
+    public class ConsoleIOManager :IIOManager
     {
         /// <summary>
         /// Prints the initial message - welcome message and commands list
         /// </summary>
-        public static string PrintInitialMessage()
+        public string PrintInitialMessage()
         {
             string welcomeMessage = @"Welcome to the game “Minesweeper”. Try to reveal all cells without mines.";
             string commands = "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit  the game.";
@@ -27,7 +27,7 @@
         /// </summary>
         /// <param name="gameField">The field to be printed.</param>
         /// <param name="hasBoomed">check if player has explode</param>
-        public static void PrintGameField(IField gameField, bool hasBoomed)
+        public void PrintGameField(IField gameField, bool hasBoomed)
         {
             if (gameField == null)
             {
@@ -58,7 +58,7 @@
         /// <summary>
         /// Prints an explosion message when the user step on a mine.
         /// </summary>
-        public static void PrintExplosionMessage(int score)
+        public void PrintExplosionMessage(int score)
         {
             Console.WriteLine("\nBooom! You are killed by a mine!" +
                 "You revealed {0} cells without mines.", score);
@@ -67,7 +67,7 @@
         /// <summary>
         /// Prints a winner message when the user complete the whole game.
         /// </summary>
-        public static void PrintWinnerMessage()
+        public void PrintWinnerMessage()
         {
             Console.WriteLine("Congratulations! You are the WINNER!\n" +
                  "Please enter your name for the top scoreboard: ");
@@ -77,7 +77,7 @@
         /// Prints a scoreboard.
         /// </summary>
         /// <param name="scoreBoard"></param>
-        public static void PrintScoreBoard(IScoreBoard scoreBoard)
+        public void PrintScoreBoard(IScoreBoard scoreBoard)
         {
             if (scoreBoard == null)
             {
@@ -92,7 +92,7 @@
         /// <summary>
         /// Prints a message on invalid user input.
         /// </summary>
-        public static void PrintInvalidCommandMessage()
+        public void PrintInvalidCommandMessage()
         {
             Console.WriteLine("Invalid row/col entered! Try again!");
 
@@ -101,7 +101,7 @@
         /// <summary>
         /// Prints the end message when the user want to quit the game
         /// </summary>
-        public static void PrintQuitMessage()
+        public void PrintQuitMessage()
         {
             Console.WriteLine("\nGood bye!\n");
         }
@@ -110,7 +110,7 @@
         /// Gets the user input - command or coordinates (row and column).
         /// </summary>
         /// <returns>Returns the user input.</returns>
-        public static string GetUserInput()
+        public string GetUserInput()
         {
             Console.Write("Enter row and column: ");
 
@@ -128,7 +128,7 @@
         /// Gets the user nickname.
         /// </summary>
         /// <returns>Returns the user's nickname.</returns>
-        public static string GetUserNickname()
+        public string GetUserNickname()
         {
             Console.Write("Please enter your name: ");
             string playerNickname = Console.ReadLine();

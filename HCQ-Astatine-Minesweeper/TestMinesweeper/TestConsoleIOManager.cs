@@ -6,14 +6,16 @@ using System.IO;
 namespace TestMinesweeper
 {
     [TestClass]
-    public class TestConsoleIOManager
+    public class TestioManager
     {
+        private readonly IIOManager ioManager = new ConsoleIOManager();
+
         [TestMethod]
         public void TestInitialMessage()
         {
             string welcomeMessage = @"Welcome to the game “Minesweeper”. Try to reveal all cells without mines.";
             string commands = "Use 'top' to view the scoreboard, 'restart' to start a new game and 'exit' to quit  the game.";
-            string outputMessage = ConsoleIOManager.PrintInitialMessage();
+            string outputMessage = ioManager.PrintInitialMessage();
             Assert.AreEqual(outputMessage, (welcomeMessage + " " + commands));
         }
 
@@ -33,7 +35,7 @@ namespace TestMinesweeper
 4 |  ? ? ? ? ? ? ? ? ? ?|
    --------------------";
                 Assert.IsFalse(cr.ToString().Contains(scoreBoard));
-                ConsoleIOManager.PrintGameField(gameField, hasBoomed);
+                ioManager.PrintGameField(gameField, hasBoomed);
                 Assert.IsTrue(cr.ToString().Contains(scoreBoard));
             }
         }
@@ -46,7 +48,7 @@ namespace TestMinesweeper
                 int score = 5;
                 Assert.IsFalse(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " +
                     score + " cells without mines."));
-                ConsoleIOManager.PrintExplosionMessage(score);
+                ioManager.PrintExplosionMessage(score);
                 Assert.IsTrue(cr.ToString().Contains("\nBooom! You are killed by a mine!You revealed " +
                     score + " cells without mines."));
             }
@@ -58,7 +60,7 @@ namespace TestMinesweeper
             using (ConsoleRedirector cr = new ConsoleRedirector())
             {
                 Assert.IsFalse(cr.ToString().Contains("Congratulations! You are the WINNER!\nPlease enter your name for the top scoreboard: "));
-                ConsoleIOManager.PrintWinnerMessage();
+                ioManager.PrintWinnerMessage();
                 Assert.IsTrue(cr.ToString().Contains("Congratulations! You are the WINNER!\nPlease enter your name for the top scoreboard: "));
             }
         }
@@ -67,7 +69,7 @@ namespace TestMinesweeper
         [ExpectedException(typeof(ArgumentNullException))]
         public void TestPrintScoreBoardOnNull()
         {
-            ConsoleIOManager.PrintScoreBoard(null);
+            ioManager.PrintScoreBoard(null);
         }
 
         [TestMethod]
@@ -76,7 +78,7 @@ namespace TestMinesweeper
             using (ConsoleRedirector cr = new ConsoleRedirector())
             {
                 Assert.IsFalse(cr.ToString().Contains("Invalid row/col entered! Try again!"));
-                ConsoleIOManager.PrintInvalidCommandMessage();
+                ioManager.PrintInvalidCommandMessage();
                 Assert.IsTrue(cr.ToString().Contains("Invalid row/col entered! Try again!"));
             }
         }
@@ -87,7 +89,7 @@ namespace TestMinesweeper
             using (ConsoleRedirector cr = new ConsoleRedirector())
             {
                 Assert.IsFalse(cr.ToString().Contains("\nGood bye!\n"));
-                ConsoleIOManager.PrintQuitMessage();
+                ioManager.PrintQuitMessage();
                 Assert.IsTrue(cr.ToString().Contains("\nGood bye!\n"));
             }
         }
@@ -104,7 +106,7 @@ namespace TestMinesweeper
                 {
                     Console.SetIn(sr);
 
-                    ConsoleIOManager.GetUserInput();
+                    ioManager.GetUserInput();
 
                     string expected = string.Format(
                         "Enter row and column: ", Environment.NewLine);
@@ -126,7 +128,7 @@ namespace TestMinesweeper
                 {
                     Console.SetIn(sr);
 
-                    ConsoleIOManager.GetUserInput();
+                    ioManager.GetUserInput();
 
                     string expected = string.Format(
                         "Enter row and column: ", Environment.NewLine);
@@ -147,7 +149,7 @@ namespace TestMinesweeper
                 {
                     Console.SetIn(sr);
 
-                    ConsoleIOManager.GetUserNickname();
+                    ioManager.GetUserNickname();
 
                     string expected = string.Format("Please enter your name: ");
                     string expected2 = string.Format(Environment.NewLine);

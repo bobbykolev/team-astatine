@@ -10,7 +10,8 @@
     {
         internal static void Main()
         {
-            Engine.PlayMines();
+            IEngine engine = new Engine();
+            engine.Play();
         }
     }
 }

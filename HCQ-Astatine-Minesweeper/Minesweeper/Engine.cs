@@ -7,7 +7,7 @@
     /// <summary>
     /// Represents the engine that executes the main logic of the game. 
     /// </summary>
-    public static class Engine
+    public class Engine: IEngine
     {
         private static List<int> visitedRows = new List<int>();
         private static List<int> visitedCols = new List<int>();
@@ -15,11 +15,11 @@
         /// <summary>
         /// Controls the gameplay throughout other methods for validation and I/O.
         /// </summary>      
-        public static void PlayMines()
+        public void Play()
         {
             IScoreBoard scoreBoard = new ScoreBoard();
             IField gameField = new Field();
-
+            IIOManager ioManager = new ConsoleIOManager();
             int row = 0;
             int col = 0;
             int minesCounter = 0;
@@ -28,17 +28,17 @@
 
             while (true)
             {
-                ConsoleIOManager.PrintInitialMessage();
+                ioManager.PrintInitialMessage();
                 StartNewGame(gameField, ref row, ref col, ref minesCounter, ref revealedCellsCounter, ref hasExploded);
 
-                ConsoleIOManager.PrintGameField(gameField, hasExploded);
+                ioManager.PrintGameField(gameField, hasExploded);
 
                 bool rowAndColAreValid = false;
                 string input = string.Empty;
 
                 while (true)
                 {
-                    input = ConsoleIOManager.GetUserInput();
+                    input = ioManager.GetUserInput();
 
                     if (IsMoveEntered(input))
                     {
@@ -55,13 +55,13 @@
                             if (cellHasMine)
                             {
                                 hasExploded = true;
-                                ConsoleIOManager.PrintGameField(gameField, hasExploded);
-                                ConsoleIOManager.PrintExplosionMessage(revealedCellsCounter);
+                                ioManager.PrintGameField(gameField, hasExploded);
+                                ioManager.PrintExplosionMessage(revealedCellsCounter);
 
-                                string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                                string currentPlayerName = ioManager.GetUserNickname();
                                 scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
 
-                                ConsoleIOManager.PrintScoreBoard(scoreBoard);
+                                ioManager.PrintScoreBoard(scoreBoard);
                                 break;
                             }
 
@@ -69,9 +69,9 @@
 
                             if (winner)
                             {
-                                ConsoleIOManager.PrintWinnerMessage();
+                                ioManager.PrintWinnerMessage();
 
-                                string currentPlayerName = ConsoleIOManager.GetUserNickname();
+                                string currentPlayerName = ioManager.GetUserNickname();
                                 scoreBoard.AddPlayer(currentPlayerName, revealedCellsCounter);
 
                                 break;
@@ -80,11 +80,11 @@
                             gameField.Update(row, col);
                             revealedCellsCounter++;
 
-                            ConsoleIOManager.PrintGameField(gameField, cellHasMine);
+                            ioManager.PrintGameField(gameField, cellHasMine);
                         }
                         else
                         {
-                            ConsoleIOManager.PrintInvalidCommandMessage();
+                            ioManager.PrintInvalidCommandMessage();
                         }
                     }
                     else if (IsCommandEntered(input))
@@ -95,13 +95,13 @@
                         {
                             case "top":
                                 {
-                                    ConsoleIOManager.PrintScoreBoard(scoreBoard);
+                                    ioManager.PrintScoreBoard(scoreBoard);
                                     continue;
                                 }
 
                             case "exit":
                                 {
-                                    ConsoleIOManager.PrintQuitMessage();
+                                    ioManager.PrintQuitMessage();
                                     return;
                                 }
 
@@ -119,7 +119,7 @@
                     }
                     else
                     {
-                        ConsoleIOManager.PrintInvalidCommandMessage();
+                        ioManager.PrintInvalidCommandMessage();
                     }
                 }
             }
