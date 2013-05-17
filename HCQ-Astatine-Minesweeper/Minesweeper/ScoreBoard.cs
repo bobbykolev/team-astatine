@@ -39,6 +39,11 @@
                 throw new ArgumentException("Nickname cannot contain only white spaces!");
             }
 
+            if (playerScore < 0)
+            {
+                throw new ArgumentOutOfRangeException("Score cannot be a negative value!");
+            }
+
             if (!this.scoreBoard.ContainsKey(playerScore))
             {
                 this.scoreBoard.Add(playerScore, playerName);

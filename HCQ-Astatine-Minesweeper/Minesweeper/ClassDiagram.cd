@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Minesweeper.ConsoleIOManager" Collapsed="true">
-    <Position X="4.75" Y="0.75" Width="1.5" />
+  <Class Name="Minesweeper.ConsoleIOManager">
+    <Position X="1" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>gQAAAAAAAAAgAIAAAAQAAAAAAIAAAAQBAAAQAAAAAAA=</HashCode>
       <FileName>ConsoleIOManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Minesweeper.Engine" Collapsed="true">
-    <Position X="6.5" Y="0.75" Width="1.5" />
+  <Class Name="Minesweeper.Engine">
+    <Position X="2.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAACAAgAAACAAAAAAAAAAQAAAAAAEAAQEAgAAA=</HashCode>
       <FileName>Engine.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Minesweeper.Field" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="8.25" Y="0.75" Width="1.5" />
+  <Class Name="Minesweeper.Field" BaseTypeListCollapsed="true">
+    <Position X="4.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAgAAAAAAUAAAAAAAKAAAAAgABAAAAQAACABACA=</HashCode>
       <FileName>Field.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Class Name="Minesweeper.Minesweeper" Collapsed="true">
-    <Position X="4.75" Y="1.75" Width="1.5" />
+  <Class Name="Minesweeper.Minesweeper">
+    <Position X="2.75" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
       <FileName>Minesweeper.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Minesweeper.ScoreBoard" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="6.5" Y="1.75" Width="1.5" />
+  <Class Name="Minesweeper.ScoreBoard" BaseTypeListCollapsed="true">
+    <Position X="1" Y="3.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAQAAgAAEAAAAA=</HashCode>
       <FileName>ScoreBoard.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
-  <Interface Name="Minesweeper.IField" Collapsed="true">
-    <Position X="4.75" Y="3" Width="1.5" />
+  <Interface Name="Minesweeper.IField">
+    <Position X="7.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAQAAAgAAAAAAUAAAAAAAIAAAAAgAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IField.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Minesweeper.IScoreBoard" Collapsed="true">
-    <Position X="6.5" Y="3" Width="1.5" />
+  <Interface Name="Minesweeper.IScoreBoard">
+    <Position X="9.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAEAAAAA=</HashCode>
       <FileName>IScoreBoard.cs</FileName>

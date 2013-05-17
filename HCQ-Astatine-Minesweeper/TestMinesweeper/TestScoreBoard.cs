@@ -54,6 +54,17 @@
         }
 
         [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void TestAddPlayerInScoreBoard_ScoreIsNegative()
+        {
+            int score = -2;
+            string name = "Pesho";
+
+            ScoreBoard scoreBoard = new ScoreBoard();
+            scoreBoard.AddPlayer(name, score);
+        }
+
+        [TestMethod]
         public void TestGenerateScoreBoard()
         {
             ScoreBoard scoreBoard = new ScoreBoard();
